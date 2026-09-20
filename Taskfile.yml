@@ -1,0 +1,44 @@
+version: '3'
+
+vars:
+  BUILD_DIR: build
+  C_FILES: >-
+    core/include/*.h core/src/*.c core/tests/*.c
+  CFLAGS: -std=c99 -Wall -Wextra -Wpedantic -Werror -Icore/include
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list
+
+  # ---------------------------------------------------------------- formatting
+
+  format:
+    desc: Format all C sources
+    cmds:
+      - clang-format -i {{.C_FILES}}
+
+  format:check:
+    desc: Fail if any C source is not formatted (CI)
+    cmds:
+      - clang-format --dry-run --Werror {{.C_FILES}}
+
+  # ---------------------------------------------------------------------- core
+
+  core:test:
+    desc: Build and run the core tests under ASan + UBSan
+    cmds:
+      - mkdir -p {{.BUILD_DIR}}
+      - >-
+        cc {{.CFLAGS}} -g -fsanitize=address,undefined
+        core/src/bg_eik.c core/tests/test_bg_eik.c
+        -o {{.BUILD_DIR}}/test_core
+      - ./{{.BUILD_DIR}}/test_core
+
+  # ----------------------------------------------------------------------- all
+
+  clean:
+    desc: Remove all build artifacts
+    cmds:
+      - rm -rf {{.BUILD_DIR}}

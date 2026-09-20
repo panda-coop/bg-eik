@@ -1,0 +1,171 @@
+{
+  "description": "Shared test vectors for every bg-eik implementation",
+  "valid": [
+    {
+      "value": "942765371",
+      "note": "9 digits, first branch"
+    },
+    {
+      "value": "502487615",
+      "note": "9 digits, first branch"
+    },
+    {
+      "value": "134626777",
+      "note": "9 digits, first branch"
+    },
+    {
+      "value": "465715114",
+      "note": "9 digits, second branch"
+    },
+    {
+      "value": "345334889",
+      "note": "9 digits, second branch"
+    },
+    {
+      "value": "945344729",
+      "note": "9 digits, second branch"
+    },
+    {
+      "value": "323895590",
+      "note": "9 digits, zero branch"
+    },
+    {
+      "value": "450566340",
+      "note": "9 digits, zero branch"
+    },
+    {
+      "value": "769476970",
+      "note": "9 digits, zero branch"
+    },
+    {
+      "value": "7052156328043",
+      "note": "13 digits, first branch for the second check"
+    },
+    {
+      "value": "1491565923507",
+      "note": "13 digits, first branch for the second check"
+    },
+    {
+      "value": "0519232597856",
+      "note": "13 digits, first branch for the second check"
+    },
+    {
+      "value": "8286081237237",
+      "note": "13 digits, second branch for the second check"
+    },
+    {
+      "value": "2156815033433",
+      "note": "13 digits, second branch for the second check"
+    },
+    {
+      "value": "1548310003631",
+      "note": "13 digits, second branch for the second check"
+    },
+    {
+      "value": "4375734470130",
+      "note": "13 digits, zero branch for the second check"
+    },
+    {
+      "value": "5331401215410",
+      "note": "13 digits, zero branch for the second check"
+    },
+    {
+      "value": "3193242909490",
+      "note": "13 digits, zero branch for the second check"
+    }
+  ],
+  "invalid": [
+    {
+      "value": "942765372",
+      "note": "9 digits, wrong check digit"
+    },
+    {
+      "value": "942865371",
+      "note": "9 digits, corrupted digit"
+    },
+    {
+      "value": "7052156328044",
+      "note": "13 digits, wrong second check digit"
+    },
+    {
+      "value": "7052156338043",
+      "note": "13 digits, wrong first check digit"
+    },
+    {
+      "value": "7052156328143",
+      "note": "13 digits, corrupted digit in the second part"
+    },
+    {
+      "value": "",
+      "note": "empty string"
+    },
+    {
+      "value": "94276537",
+      "note": "8 digits"
+    },
+    {
+      "value": "9427653710",
+      "note": "10 digits (EGN-based codes are not supported)"
+    },
+    {
+      "value": "705215632804",
+      "note": "12 digits"
+    },
+    {
+      "value": "70521563280430",
+      "note": "14 digits"
+    },
+    {
+      "value": " 42765371",
+      "note": "leading space instead of a digit"
+    },
+    {
+      "value": "942765371 ",
+      "note": "trailing space"
+    },
+    {
+      "value": "BG942765371",
+      "note": "VAT prefix"
+    },
+    {
+      "value": "9427a5371",
+      "note": "letter inside a 9-digit code"
+    },
+    {
+      "value": "94276537x",
+      "note": "letter instead of the check digit"
+    },
+    {
+      "value": "９４２７６５３７１",
+      "note": "fullwidth unicode digits"
+    },
+    {
+      "value": "-42765371",
+      "note": "minus sign"
+    },
+    {
+      "value": "70521563a8043",
+      "note": "13 chars, letter at index 8"
+    },
+    {
+      "value": "705215632a043",
+      "note": "13 chars, letter at index 9"
+    },
+    {
+      "value": "7052156328a43",
+      "note": "13 chars, letter at index 10"
+    },
+    {
+      "value": "70521563280a3",
+      "note": "13 chars, letter at index 11"
+    },
+    {
+      "value": "705215632804a",
+      "note": "13 chars, letter at index 12"
+    },
+    {
+      "value": "069874219941a",
+      "note": "regression: passed in the old TS implementation (letter as the last char)"
+    }
+  ]
+}
