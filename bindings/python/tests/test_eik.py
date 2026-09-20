@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from pandacoop.bg_eik import is_valid_eik
+from eik import is_valid_eik
 
 VECTORS = json.loads(
     (Path(__file__).resolve().parents[3] / "test-vectors" / "eik.json").read_text(encoding="utf-8")

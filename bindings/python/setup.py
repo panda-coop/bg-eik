@@ -5,7 +5,7 @@ from pathlib import Path
 
 from setuptools import Extension, setup
 
-PACKAGE = Path("src/pandacoop/bg_eik")
+PACKAGE = Path("src/eik")
 CORE = PACKAGE / "_core"
 
 if not (CORE / "src" / "bg_eik.c").exists():
@@ -14,7 +14,7 @@ if not (CORE / "src" / "bg_eik.c").exists():
 setup(
     ext_modules=[
         Extension(
-            "pandacoop.bg_eik._module",
+            "eik._module",
             sources=[str(PACKAGE / "_module.c"), str(CORE / "src" / "bg_eik.c")],
             include_dirs=[str(CORE / "include")],
             py_limited_api=True,

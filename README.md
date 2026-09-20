@@ -15,15 +15,15 @@ spaces, a `BG` prefix or any other character make the value invalid.
 ## Usage
 
 ```python
-# pip install pandacoop-bg-eik
-from pandacoop.bg_eik import is_valid_eik
+# pip install eik
+from eik import is_valid_eik
 
 is_valid_eik("942765371")  # True
 ```
 
 ```js
-// npm install @pandacoop/bg-eik
-import { isValidEik } from '@pandacoop/bg-eik';
+// npm install @panda-coop/eik
+import { isValidEik } from '@panda-coop/eik';
 
 isValidEik('942765371'); // true
 ```

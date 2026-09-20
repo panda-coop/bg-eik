@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: npm
-      url: https://www.npmjs.com/package/@pandacoop/bg-eik
+      url: https://www.npmjs.com/package/@panda-coop/eik
     permissions:
       id-token: write
     steps:
@@ -68,7 +68,7 @@ jobs:
 
       # Staged publish: lands on the "next" dist-tag, not "latest", so
       # nothing reaches plain `npm install` until the release is promoted:
-      #   npm dist-tag add @pandacoop/bg-eik@<version> latest
+      #   npm dist-tag add @panda-coop/eik@<version> latest
       - name: Publish (staged, dist-tag next)
         working-directory: bindings/js
         run: npm publish --tag next

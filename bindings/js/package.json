@@ -1,5 +1,5 @@
 {
-    "name": "@pandacoop/bg-eik",
+    "name": "@panda-coop/eik",
     "version": "1.0.0",
     "description": "Bulgarian EIK / UIC / BULSTAT (ЕИК) validator",
     "license": "GPL-3.0-or-later",
