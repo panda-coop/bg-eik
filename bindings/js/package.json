@@ -1,0 +1,33 @@
+{
+    "name": "@pandacoop/bg-eik",
+    "version": "0.1.0",
+    "description": "Bulgarian EIK / UIC / BULSTAT (ЕИК) validator",
+    "license": "GPL-3.0-or-later",
+    "keywords": ["eik", "uic", "bulstat", "еик", "булстат", "bulgaria", "validator"],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/panda-coop/bg-eik.git",
+        "directory": "bindings/js"
+    },
+    "type": "module",
+    "sideEffects": false,
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "types": "./dist/index.d.ts",
+    "files": ["dist"],
+    "engines": {
+        "node": ">=18"
+    },
+    "scripts": {
+        "embed": "node scripts/embed-wasm.mjs",
+        "build": "npm run embed && tsc",
+        "test": "node --test tests/*.test.mjs"
+    },
+    "devDependencies": {
+        "typescript": "^5.7.0"
+    }
+}

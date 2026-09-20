@@ -4,6 +4,7 @@ vars:
   BUILD_DIR: build
   C_FILES: >-
     core/include/*.h core/src/*.c core/tests/*.c
+    bindings/js/wasm/*.c
   CFLAGS: -std=c99 -Wall -Wextra -Wpedantic -Werror -Icore/include
 
 tasks:
@@ -36,9 +37,49 @@ tasks:
         -o {{.BUILD_DIR}}/test_core
       - ./{{.BUILD_DIR}}/test_core
 
+  # ------------------------------------------------------------------------ js
+
+  wasm:build:
+    desc: Compile the core into a freestanding wasm module
+    sources:
+      - core/include/*.h
+      - core/src/*.c
+      - bindings/js/wasm/*.c
+    generates:
+      - bindings/js/build/bg_eik.wasm
+    cmds:
+      - mkdir -p bindings/js/build
+      - >-
+        clang --target=wasm32 -nostdlib -O2 -Icore/include
+        -Wl,--no-entry
+        core/src/bg_eik.c bindings/js/wasm/shim.c
+        -o bindings/js/build/bg_eik.wasm
+
+  js:install:
+    dir: bindings/js
+    sources:
+      - package.json
+    cmds:
+      - npm install
+
+  js:build:
+    desc: Build the npm package (wasm + TypeScript)
+    deps: [wasm:build, js:install]
+    dir: bindings/js
+    cmds:
+      - npm run build
+
+  js:test:
+    desc: Run the JS tests against the shared test vectors
+    deps: [js:build]
+    dir: bindings/js
+    cmds:
+      - npm test
+
   # ----------------------------------------------------------------------- all
 
   clean:
     desc: Remove all build artifacts
     cmds:
       - rm -rf {{.BUILD_DIR}}
+      - rm -rf bindings/js/build bindings/js/dist bindings/js/src/wasm-bytes.ts
