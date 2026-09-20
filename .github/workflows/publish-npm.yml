@@ -66,6 +66,9 @@ jobs:
       - name: Build and test
         run: task js:test
 
-      - name: Publish
+      # Staged publish: lands on the "next" dist-tag, not "latest", so
+      # nothing reaches plain `npm install` until the release is promoted:
+      #   npm dist-tag add @pandacoop/bg-eik@<version> latest
+      - name: Publish (staged, dist-tag next)
         working-directory: bindings/js
-        run: npm publish
+        run: npm publish --tag next
