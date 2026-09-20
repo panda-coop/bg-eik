@@ -19,6 +19,9 @@
     },
     "types": "./dist/index.d.ts",
     "files": ["dist"],
+    "publishConfig": {
+        "access": "public"
+    },
     "engines": {
         "node": ">=18"
     },

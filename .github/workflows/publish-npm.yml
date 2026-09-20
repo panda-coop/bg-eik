@@ -1,0 +1,71 @@
+name: Publish to npm
+
+on:
+  push:
+    tags: ['v*']
+  # Build-only run: produces the package tarball as an artifact, used once
+  # to bootstrap the package on the registry before trusted publishing is
+  # configured.
+  workflow_dispatch:
+
+jobs:
+  pack:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install clang and lld
+        run: sudo apt-get update && sudo apt-get install -y clang lld
+
+      - name: Build and test
+        run: task js:test
+
+      - name: Pack
+        working-directory: bindings/js
+        run: npm pack
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: npm-package
+          path: bindings/js/*.tgz
+
+  publish:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/@pandacoop/bg-eik
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # npm >= 11.5.1 is required for trusted publishing; Node 24 bundles it.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install clang and lld
+        run: sudo apt-get update && sudo apt-get install -y clang lld
+
+      - name: Build and test
+        run: task js:test
+
+      - name: Publish
+        working-directory: bindings/js
+        run: npm publish
