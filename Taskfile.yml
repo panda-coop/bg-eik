@@ -109,6 +109,14 @@ tasks:
 
   # ----------------------------------------------------------------------- all
 
+  test:
+    desc: Format check + every test suite
+    cmds:
+      - task: format:check
+      - task: core:test
+      - task: js:test
+      - task: python:test
+
   clean:
     desc: Remove all build artifacts
     cmds:
