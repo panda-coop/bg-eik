@@ -4,8 +4,9 @@ vars:
   BUILD_DIR: build
   C_FILES: >-
     core/include/*.h core/src/*.c core/tests/*.c
-    bindings/js/wasm/*.c
+    bindings/js/wasm/*.c bindings/python/src/pandacoop/bg_eik/_module.c
   CFLAGS: -std=c99 -Wall -Wextra -Wpedantic -Werror -Icore/include
+  PY_CORE: bindings/python/src/pandacoop/bg_eik/_core
 
 tasks:
   default:
@@ -76,10 +77,43 @@ tasks:
     cmds:
       - npm test
 
+  # -------------------------------------------------------------------- python
+
+  python:sync:
+    desc: Copy the C core into the Python package (required for sdist)
+    cmds:
+      - rm -rf {{.PY_CORE}}
+      - mkdir -p {{.PY_CORE}}
+      - cp -r core/include core/src {{.PY_CORE}}/
+
+  python:install:
+    desc: Editable install with test dependencies (run inside a virtualenv)
+    deps: [python:sync]
+    dir: bindings/python
+    cmds:
+      - python -m pip install -e ".[test]"
+
+  python:test:
+    desc: Run the Python tests against the shared test vectors
+    deps: [python:install]
+    dir: bindings/python
+    cmds:
+      - python -m pytest -q
+
+  python:build:
+    desc: Build sdist and wheel
+    deps: [python:sync]
+    dir: bindings/python
+    cmds:
+      - python -m build
+
   # ----------------------------------------------------------------------- all
 
   clean:
     desc: Remove all build artifacts
     cmds:
-      - rm -rf {{.BUILD_DIR}}
+      - rm -rf {{.BUILD_DIR}} {{.PY_CORE}}
       - rm -rf bindings/js/build bindings/js/dist bindings/js/src/wasm-bytes.ts
+      - rm -rf bindings/python/build bindings/python/dist bindings/python/src/*.egg-info
+      - find bindings/python -name "*.so" -delete -o -name "*.pyd" -delete
+      - find bindings/python -name __pycache__ -type d -prune -exec rm -rf {} +

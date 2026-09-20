@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pandacoop-bg-eik"
+version = "0.1.0"
+description = "Bulgarian EIK / UIC / BULSTAT (ЕИК) validator"
+readme = "README.md"
+license = { text = "GPL-3.0-or-later" }
+requires-python = ">=3.9"
+keywords = ["eik", "uic", "bulstat", "еик", "булстат", "bulgaria", "validator"]
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: C",
+    "Programming Language :: Python :: 3",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Repository = "https://github.com/panda-coop/bg-eik"
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"pandacoop.bg_eik" = ["py.typed", "_core/include/*.h", "_core/src/*.c"]
+
+[tool.cibuildwheel]
+build = "cp39-*"
+test-extras = ["test"]
+test-command = "pytest {project}/bindings/python/tests"
