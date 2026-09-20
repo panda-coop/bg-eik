@@ -1,4 +1,4 @@
-# bg-eik
+# eik
 
 Validator for the Bulgarian **EIK** (ЕИК, also known as UIC or BULSTAT code).
 One implementation in C, shipped as a Python package and an npm package.

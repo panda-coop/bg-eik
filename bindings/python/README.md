@@ -8,4 +8,4 @@ from eik import is_valid_eik
 is_valid_eik("942765371")  # True
 ```
 
-See the [repository](https://github.com/panda-coop/bg-eik) for details.
+See the [repository](https://github.com/panda-coop/eik) for details.

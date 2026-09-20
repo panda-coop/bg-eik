@@ -18,7 +18,7 @@ classifiers = [
 ]
 
 [project.urls]
-Repository = "https://github.com/panda-coop/bg-eik"
+Repository = "https://github.com/panda-coop/eik"
 
 [project.optional-dependencies]
 test = ["pytest"]
