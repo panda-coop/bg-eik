@@ -1,4 +1,4 @@
-# eik
+# panda-coop-eik
 
 Bulgarian EIK / UIC / BULSTAT (ЕИК) validator.
 

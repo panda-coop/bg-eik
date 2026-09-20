@@ -15,7 +15,7 @@ spaces, a `BG` prefix or any other character make the value invalid.
 ## Usage
 
 ```python
-# pip install eik
+# pip install panda-coop-eik
 from eik import is_valid_eik
 
 is_valid_eik("942765371")  # True
