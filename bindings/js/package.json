@@ -1,6 +1,6 @@
 {
     "name": "@pandacoop/bg-eik",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "Bulgarian EIK / UIC / BULSTAT (ЕИК) validator",
     "license": "GPL-3.0-or-later",
     "keywords": ["eik", "uic", "bulstat", "еик", "булстат", "bulgaria", "validator"],
