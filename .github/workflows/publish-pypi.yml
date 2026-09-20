@@ -1,0 +1,73 @@
+name: Publish to PyPI
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  sdist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Sync the C core into the package
+        run: task python:sync
+
+      - name: Build sdist
+        run: pipx run build --sdist --outdir dist bindings/python
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sdist
+          path: dist/*.tar.gz
+
+  wheels:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-13, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Sync the C core into the package
+        run: task python:sync
+
+      - uses: pypa/cibuildwheel@v3.2
+        with:
+          package-dir: bindings/python
+          output-dir: dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.os }}
+          path: dist/*.whl
+
+  publish:
+    needs: [sdist, wheels]
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/pandacoop-bg-eik
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
