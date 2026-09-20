@@ -1,0 +1,21 @@
+# build artifacts
+/build/
+
+# js
+bindings/js/node_modules/
+bindings/js/build/
+bindings/js/dist/
+bindings/js/src/wasm-bytes.ts
+
+# python
+bindings/python/src/pandacoop/bg_eik/_core/
+bindings/python/build/
+bindings/python/dist/
+*.egg-info/
+*.so
+*.pyd
+__pycache__/
+.pytest_cache/
+.venv/
+
+.task/
